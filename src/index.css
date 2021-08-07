@@ -20,6 +20,11 @@ code {
   height: calc(100vh - 64px - 70px);
 }
 
+.radio-group {
+  display: flex;
+  justify-content: space-between;
+}
+
 .movies {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

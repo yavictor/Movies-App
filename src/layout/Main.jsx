@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Movies } from "../components/Movies";
+import { Search } from "../components/Search";
 
 class Main extends Component {
   state = {
@@ -12,12 +13,19 @@ class Main extends Component {
       .then(data => this.setState({movies: data.Search}));
   }
 
+  searchRequest = (request) => {
+    fetch(`http://www.omdbapi.com/?apikey=4cb34106&s=${request}`)
+      .then(response => response.json())
+      .then(data => this.setState({movies: data.Search}));
+  }
+
   render() {
     const {movies} = this.state;
 
     return (
       <main>
         <div className="container content">
+          <Search searchRequest={this.searchRequest} />
           {
             movies.length ? (<Movies movies={movies} />) :
             <div className="">
