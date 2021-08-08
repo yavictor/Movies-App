@@ -3,21 +3,23 @@ import { Component } from 'react';
 class Search extends Component {
   state = {
     search: '',
-    searchQuery: '',
+    queryFilter: '',
   };
 
   handleKey = (e) => {
     if (e.key === 'Enter') {
-      this.props.searchRequest(this.state.search);
+      this.props.searchRequest(this.state.search, this.state.queryFilter);
     }
   };
 
   handleRadioChange = (e) => {
-    this.setState({ searchQuery: e.target.name });
+    this.setState(() => ({ queryFilter: e.target.name }), () => {
+      this.props.searchRequest(this.state.search, this.state.queryFilter);
+    });
   };
 
   render() {
-    const { search, searchQuery } = this.state;
+    const { search, queryFilter } = this.state;
 
     return (
       <div className="searchBar">
@@ -37,7 +39,7 @@ class Search extends Component {
             className="btn col s2 input-field orange darken-2"
             type="submit"
             name="action"
-            onClick={() => this.props.searchRequest(search)}
+            onClick={() => this.props.searchRequest(search, queryFilter)}
           >
             OK
           </button>
@@ -48,7 +50,7 @@ class Search extends Component {
               className=""
               name="all"
               type="radio"
-              checked={searchQuery === 'all'}
+              checked={queryFilter === 'all'}
               onChange={this.handleRadioChange}
             />
             <span>All</span>
@@ -58,7 +60,7 @@ class Search extends Component {
               className=""
               name="movie"
               type="radio"
-              checked={searchQuery === 'movie'}
+              checked={queryFilter === 'movie'}
               onChange={this.handleRadioChange}
             />
             <span>Films</span>
@@ -68,7 +70,7 @@ class Search extends Component {
               className=""
               name="series"
               type="radio"
-              checked={searchQuery === 'series'}
+              checked={queryFilter === 'series'}
               onChange={this.handleRadioChange}
             />
             <span>Series</span>

@@ -17,7 +17,7 @@ code {
 }
 
 .content {
-  height: calc(100vh - 64px - 70px);
+  min-height: calc(100vh - 64px - 70px);
 }
 
 .radio-group {
@@ -29,4 +29,8 @@ code {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
+}
+
+.nothing-found {
+  white-space: nowrap;
 }

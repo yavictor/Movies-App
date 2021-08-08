@@ -1,43 +1,47 @@
-import { Component } from "react";
-import { Movies } from "../components/Movies";
-import { Search } from "../components/Search";
+import { Component } from 'react';
+import { Movies } from '../components/Movies';
+import { Search } from '../components/Search';
 
 class Main extends Component {
   state = {
     movies: [],
-  }
+    loading: true,
+  };
 
   componentDidMount() {
     fetch('http://www.omdbapi.com/?apikey=4cb34106&s=star wars')
-      .then(response => response.json())
-      .then(data => this.setState({movies: data.Search}));
+      .then((response) => response.json())
+      .then((data) => this.setState({ movies: data.Search, loading: false }));
   }
 
-  searchRequest = (request) => {
-    fetch(`http://www.omdbapi.com/?apikey=4cb34106&s=${request}`)
-      .then(response => response.json())
-      .then(data => this.setState({movies: data.Search}));
-  }
+  searchRequest = (request, typeRequest = 'all') => {
+    this.setState({ loading: true });
+    let typeFilter = '';
+    if (typeRequest !== 'all') {
+      typeFilter = `&type=${typeRequest}`;
+    }
+    fetch(`http://www.omdbapi.com/?apikey=4cb34106&s=${request}${typeFilter}`)
+      .then((response) => response.json())
+      .then((data) => this.setState({ movies: data.Search, loading: false }));
+  };
 
   render() {
-    const {movies} = this.state;
+    const { movies, loading } = this.state;
 
     return (
       <main>
         <div className="container content">
           <Search searchRequest={this.searchRequest} />
-          {
-            movies.length ? (<Movies movies={movies} />) :
+          {!loading ? (
+            <Movies movies={movies} />
+          ) : (
             <div className="">
-              <h4 class="center">LOADING...</h4>
-              <div class="progress">
-                <div class="indeterminate"></div>
+              <h4 className="center">LOADING...</h4>
+              <div className="progress">
+                <div className="indeterminate"></div>
               </div>
             </div>
-          }
-         
-
-          
+          )}
         </div>
       </main>
     );
