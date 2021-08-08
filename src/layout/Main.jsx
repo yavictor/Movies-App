@@ -2,6 +2,9 @@ import { Component } from 'react';
 import { Movies } from '../components/Movies';
 import { Search } from '../components/Search';
 
+const API_KEY = process.env.REACT_APP_API_KEY;
+let typeFilter = '';
+
 class Main extends Component {
   state = {
     movies: [],
@@ -9,18 +12,18 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    fetch('http://www.omdbapi.com/?apikey=4cb34106&s=star wars')
+    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=star wars`)
       .then((response) => response.json())
       .then((data) => this.setState({ movies: data.Search, loading: false }));
   }
 
   searchRequest = (request, typeRequest = 'all') => {
     this.setState({ loading: true });
-    let typeFilter = '';
+
     if (typeRequest !== 'all') {
       typeFilter = `&type=${typeRequest}`;
     }
-    fetch(`http://www.omdbapi.com/?apikey=4cb34106&s=${request}${typeFilter}`)
+    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${request}${typeFilter}`)
       .then((response) => response.json())
       .then((data) => this.setState({ movies: data.Search, loading: false }));
   };
