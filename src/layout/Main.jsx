@@ -12,9 +12,13 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=star wars`)
+    fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=star wars`)
       .then((response) => response.json())
-      .then((data) => this.setState({ movies: data.Search, loading: false }));
+      .then((data) => this.setState({ movies: data.Search, loading: false }))
+      .catch((error) => {
+        console.error(error);
+        this.setState({ loading: false });
+      });
   }
 
   searchRequest = (request, typeRequest = 'all') => {
@@ -23,9 +27,13 @@ class Main extends Component {
     if (typeRequest !== 'all') {
       typeFilter = `&type=${typeRequest}`;
     }
-    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${request}${typeFilter}`)
+    fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${request}${typeFilter}`)
       .then((response) => response.json())
-      .then((data) => this.setState({ movies: data.Search, loading: false }));
+      .then((data) => this.setState({ movies: data.Search, loading: false }))
+      .catch((error) => {
+        console.error(error);
+        this.setState({ loading: false });
+      });
   };
 
   render() {
