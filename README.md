@@ -3,7 +3,7 @@
 View on Github Pages
 [https://yavictor.github.io/Movies-App/](https://yavictor.github.io/Movies-App/)
 
-Simple app, created with ReactJS and MetializeCSS for layout. You can search films, series, cartoons or games 
+Simple app, created with ReactJS and MaterializeCSS for layout. You can search films, series, cartoons or games from [omdb](http://www.omdbapi.com/) 
 and filter results.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
