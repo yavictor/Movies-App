@@ -2,17 +2,8 @@ function Movie (props) {
   const {
     Title: title,
     Year: year,
-    Rated,
-    Released,
-    Runtime,
-    Genre,
-    Director,
-    Writer,
-    Actors,
-    Plot,
     Poster : poster,
     imdbRating,
-    imdbVotes,
     imdbID,
     Type: type,
   } = props;
@@ -22,9 +13,9 @@ function Movie (props) {
     <div className="card-image waves-effect waves-block waves-light">
       {
         poster === 'N/A' ?
-          <img className="activator" src={`https://via.placeholder.com/300x425?text=${title}`} />
+          <img className="activator" src={`https://via.placeholder.com/300x425?text=${title}`} alt={`${title} poster`} />
           :
-          <img className="activator" src={poster} />
+          <img className="activator" src={poster} alt={`${title} poster`} />
       }
       
     </div>

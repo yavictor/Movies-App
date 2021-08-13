@@ -1,84 +1,79 @@
-import { Component } from 'react';
+import {useState} from 'react';
 
-class Search extends Component {
-  state = {
-    search: '',
-    queryFilter: '',
-  };
+const Search = (props) => {
+  const { searchRequest = Function.prototype } = props;
 
-  handleKey = (e) => {
+  const [search, setSearch] = useState('');
+  const [queryFilter, setFilter] = useState('');
+
+  const handleKey = (e) => {
     if (e.key === 'Enter') {
-      this.props.searchRequest(this.state.search, this.state.queryFilter);
+      searchRequest(search, queryFilter);
     }
   };
 
-  handleRadioChange = (e) => {
-    this.setState(() => ({ queryFilter: e.target.name }), () => {
-      this.props.searchRequest(this.state.search, this.state.queryFilter);
-    });
+  const handleRadioChange = (e) => {
+    setFilter( e.target.name );
+    searchRequest(search, e.target.name);
   };
 
-  render() {
-    const { search, queryFilter } = this.state;
-
-    return (
-      <div className="searchBar">
-        <div className="row">
-          <div className="input-field inline col s10">
-            <input
-              id="search"
-              placeholder="search"
-              type="search"
-              className="validate"
-              value={search}
-              onChange={(e) => this.setState({ search: e.target.value })}
-              onKeyDown={this.handleKey}
-            />
-          </div>
-          <button
-            className="btn col s2 input-field orange darken-2"
-            type="submit"
-            name="action"
-            onClick={() => this.props.searchRequest(search, queryFilter)}
-          >
-            OK
-          </button>
+  return (
+    <div className="searchBar">
+      <div className="row">
+        <div className="input-field inline col s10">
+          <input
+            id="search"
+            placeholder="search"
+            type="search"
+            className="validate"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleKey}
+          />
         </div>
-        <div className="row radio-group">
-          <label>
-            <input
-              className=""
-              name="all"
-              type="radio"
-              checked={queryFilter === 'all'}
-              onChange={this.handleRadioChange}
-            />
-            <span>All</span>
-          </label>
-          <label>
-            <input
-              className=""
-              name="movie"
-              type="radio"
-              checked={queryFilter === 'movie'}
-              onChange={this.handleRadioChange}
-            />
-            <span>Films</span>
-          </label>
-          <label>
-            <input
-              className=""
-              name="series"
-              type="radio"
-              checked={queryFilter === 'series'}
-              onChange={this.handleRadioChange}
-            />
-            <span>Series</span>
-          </label>
-        </div>
+        <button
+          className="btn col s2 input-field orange darken-2"
+          type="submit"
+          name="action"
+          onClick={() => searchRequest(search, queryFilter)}
+        >
+          OK
+        </button>
       </div>
-    );
-  }
-}
+      <div className="row radio-group">
+        <label>
+          <input
+            className=""
+            name="all"
+            type="radio"
+            checked={queryFilter === 'all'}
+            onChange={handleRadioChange}
+          />
+          <span>All</span>
+        </label>
+        <label>
+          <input
+            className=""
+            name="movie"
+            type="radio"
+            checked={queryFilter === 'movie'}
+            onChange={handleRadioChange}
+          />
+          <span>Films</span>
+        </label>
+        <label>
+          <input
+            className=""
+            name="series"
+            type="radio"
+            checked={queryFilter === 'series'}
+            onChange={handleRadioChange}
+          />
+          <span>Series</span>
+        </label>
+      </div>
+    </div>
+  );  
+};
 
 export { Search };
